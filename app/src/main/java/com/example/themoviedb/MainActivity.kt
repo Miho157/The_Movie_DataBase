@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val MOVIES_FRAGMENT = "movies_fragment"
 private const val TV_SHOWS_FRAGMENT = "tv_shows_fragment"
+private const val WATCH_LIST_FRAGMENT = "watch_list_fragment"
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.movies -> showMoviesFragment()
                 R.id.shows -> showTvShowsFragment()
+                R.id.watchlist -> showWatchListFragment()
             }
             return@setOnNavigationItemSelectedListener true
         }
@@ -37,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         val fragment = supportFragmentManager.findFragmentByTag(MOVIES_FRAGMENT)
         val tvShowsFragment = supportFragmentManager.findFragmentByTag(TV_SHOWS_FRAGMENT)
+        val watchListFragment = supportFragmentManager.findFragmentByTag(WATCH_LIST_FRAGMENT)
         tvShowsFragment?.let { transaction.hide(it) }
+        watchListFragment?.let { transaction.hide(it) }
         if (fragment == null) {
             transaction.add(R.id.fragment_container, MoviesFragment(), MOVIES_FRAGMENT)
         } else {
@@ -47,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private fun showTvShowsFragment() {
         val transaction = supportFragmentManager.beginTransaction()
         val fragment = supportFragmentManager.findFragmentByTag(TV_SHOWS_FRAGMENT)
@@ -54,6 +59,21 @@ class MainActivity : AppCompatActivity() {
         moviesFragment?.let { transaction.hide(it) }
         if (fragment == null) {
             transaction.add(R.id.fragment_container, TvShowsFragment(), TV_SHOWS_FRAGMENT)
+        } else {
+            transaction.show(fragment)
+        }
+        transaction.commit()
+    }
+
+    private fun showWatchListFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        val fragment = supportFragmentManager.findFragmentByTag(WATCH_LIST_FRAGMENT)
+        val moviesFragment = supportFragmentManager.findFragmentByTag(MOVIES_FRAGMENT)
+        val tvShowsFragment = supportFragmentManager.findFragmentByTag(TV_SHOWS_FRAGMENT)
+        moviesFragment?.let { transaction.hide(it) }
+        tvShowsFragment?.let { transaction.hide(it) }
+        if (fragment == null) {
+            transaction.add(R.id.fragment_container, WatchListFragment(), WATCH_LIST_FRAGMENT)
         } else {
             transaction.show(fragment)
         }

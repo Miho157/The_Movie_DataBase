@@ -75,4 +75,10 @@ dependencies {
     // Material
 // https://github.com/material-components/material-components-android
     implementation 'com.google.android.material:material:1.6.1'
+
+    // Room
+// https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
+
 }
